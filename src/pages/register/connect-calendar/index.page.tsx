@@ -8,14 +8,21 @@ import { signIn, useSession, signOut } from 'next-auth/react'
 import Image from 'next/image'
 import { useRouter } from 'next/router'
 
-export default function Register() {
+export default function ConnectCalendar() {
   const session = useSession()
   const router = useRouter()
 
   const hasAuthError = !!router.query.error
+  const isSignedIn = session.status === 'authenticated'
 
+  function handleStartSession() {
+    signIn('google')
+  }
   function handleEndSession() {
     signOut({ callbackUrl: '/' })
+  }
+  async function handleGoToTimeIntervals() {
+    await router.push(`/register/time-intervals`)
   }
   return (
     <>
@@ -37,13 +44,11 @@ export default function Register() {
         <ConnectBox>
           <ConnectItem>
             Google Calendar
-            {!session.data && (
+            {!isSignedIn && (
               <Button
                 variant="secondary"
                 size="sm"
-                onClick={() => {
-                  signIn('google')
-                }}
+                onClick={handleStartSession}
               >
                 Conectar
                 <ArrowRight />
@@ -56,7 +61,7 @@ export default function Register() {
               permissões de acesso ao google calendar
             </AuthError>
           )}
-          {session.data && (
+          {isSignedIn && (
             <>
               <SessionUser>
                 <Image
@@ -76,20 +81,15 @@ export default function Register() {
             </>
           )}
 
-          {session.data && (
-            <Button type="submit">
+          {isSignedIn && (
+            <Button type="submit" onClick={handleGoToTimeIntervals}>
               Próximo passo
               <ArrowRight />
             </Button>
           )}
           <br></br>
-          {session.data && (
-            <Button
-              variant={'secondary'}
-              onClick={() => {
-                handleEndSession()
-              }}
-            >
+          {isSignedIn && (
+            <Button variant={'secondary'} onClick={handleEndSession}>
               terminar sessão
             </Button>
           )}
