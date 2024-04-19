@@ -82,16 +82,16 @@ export default function ConnectCalendar() {
           )}
 
           {isSignedIn && (
-            <Button type="submit" onClick={handleGoToTimeIntervals}>
-              Próximo passo
-              <ArrowRight />
-            </Button>
-          )}
-          <br></br>
-          {isSignedIn && (
-            <Button variant={'secondary'} onClick={handleEndSession}>
-              terminar sessão
-            </Button>
+            <>
+              <Button type="submit" onClick={handleGoToTimeIntervals}>
+                Próximo passo
+                <ArrowRight />
+              </Button>
+              <br />
+              <Button variant={'secondary'} onClick={handleEndSession}>
+                terminar sessão
+              </Button>
+            </>
           )}
         </ConnectBox>
       </Container>
