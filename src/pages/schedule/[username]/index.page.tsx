@@ -1,6 +1,6 @@
 import { Avatar, Heading, Text } from '@ignite-ui/react'
 import { Container, UserHeader } from './styles'
-import { GetStaticPaths, GetStaticProps } from 'next'
+import { GetStaticPaths, GetStaticProps, InferGetStaticPropsType } from 'next'
 import { prisma } from '@/src/lib/prisma'
 import { ScheduleForm } from './ScheduleForm'
 
@@ -12,7 +12,7 @@ interface ScheduleProps {
   }
 }
 
-export default function Schedule({ user }: ScheduleProps) {
+export default function Schedule({ user }: InferGetStaticPropsType<typeof getStaticProps>) {
   return (
     <Container>
       <UserHeader>
@@ -50,9 +50,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
       notFound: true,
     }
   }
-  if (user) {
-    console.log(user)
-  }
+
   return {
     props: {
       user: {

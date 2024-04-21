@@ -25,7 +25,7 @@ export const Container = styled(Box, {
 
 export const TimePicker = styled('div', {
   borderLeft: '1px solid $gray600',
-  padding: '$6 $6 0',
+  padding: '$16 $6 0',
   overflowY: 'scroll',
   position: 'absolute',
   top: 0,
@@ -35,6 +35,16 @@ export const TimePicker = styled('div', {
 })
 export const TimePickerHeader = styled('div', {
   fontWeight: '$medium',
+  position: 'absolute',
+  top: '-1px',
+  right: '-1px',
+  width: 280,
+  padding: '20px 0',
+  textAlign: 'center',
+  overflow: 'hidden',
+  zIndex: 1,
+  backgroundColor: '$gray900',
+  textTransform: 'capitalize',
   span: {
     color: '$gray200',
   },
