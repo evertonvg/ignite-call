@@ -6,8 +6,7 @@ import previewImage from '../../assets/app-preview.png'
 import Image from 'next/image'
 import { ClaimUsernameForm } from './components/ClaimUsernameForm'
 
-// const inter = Inter({ subsets: ['latin'] })
-
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export default function Home(props) {
   return (
     <>

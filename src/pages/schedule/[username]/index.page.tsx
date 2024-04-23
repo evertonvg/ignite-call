@@ -13,7 +13,9 @@ interface ScheduleProps {
   }
 }
 
-export default function Schedule({ user }: InferGetStaticPropsType<typeof getStaticProps>) {
+export default function Schedule({
+  user,
+}: InferGetStaticPropsType<typeof getStaticProps>) {
   return (
     <>
       <NextSeo title={`Agendar com ${user.name} | Ignite Call`} />

@@ -27,7 +27,9 @@ const updateProfileSchema = z.object({
 
 type UpdateProfileData = z.infer<typeof updateProfileSchema>
 
-export default function UpdateProfile(props: InferGetServerSidePropsType<typeof getServerSideProps>) {
+export default function UpdateProfile(
+  props: InferGetServerSidePropsType<typeof getServerSideProps>,
+) {
   const {
     register,
     handleSubmit,

@@ -34,7 +34,7 @@ interface BlockedDates {
   blockedDates: number[]
 }
 
-export function Calendar({ selectedDate, onDateSelected }: CalendarProps) {
+export function Calendar({ onDateSelected }: CalendarProps) {
   const [currentDate, setCurrentDate] = useState(() => {
     return dayjs().set('date', 1)
   })
@@ -150,10 +150,10 @@ export function Calendar({ selectedDate, onDateSelected }: CalendarProps) {
         </CalendarTitle>
         <CalendarActions>
           <button>
-            <CaretLeft onClick={handlePreviousMonth} title="previous month" />
+            <CaretLeft onClick={handlePreviousMonth} />
           </button>
           <button>
-            <CaretRight onClick={handleNextMonth} title="next month" />
+            <CaretRight onClick={handleNextMonth} />
           </button>
         </CalendarActions>
       </Calendarheader>
