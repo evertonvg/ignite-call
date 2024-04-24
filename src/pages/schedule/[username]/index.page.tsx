@@ -1,6 +1,6 @@
 import { Avatar, Heading, Text } from '@ignite-ui/react'
 import { Container, UserHeader } from './styles'
-import { GetStaticPaths, GetStaticProps, InferGetStaticPropsType } from 'next'
+import { GetStaticPaths, GetStaticProps } from 'next'
 import { prisma } from '@/src/lib/prisma'
 import { ScheduleForm } from './ScheduleForm'
 import { NextSeo } from 'next-seo'
@@ -15,7 +15,7 @@ interface ScheduleProps {
 
 export default function Schedule({
   user,
-}: InferGetStaticPropsType<typeof getStaticProps>) {
+}: ScheduleProps) {
   return (
     <>
       <NextSeo title={`Agendar com ${user.name} | Ignite Call`} />

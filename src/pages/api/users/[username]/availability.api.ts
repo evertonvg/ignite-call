@@ -1,11 +1,13 @@
 /* eslint-disable camelcase */
-import { prisma } from '@/src/lib/prisma'
 import dayjs from 'dayjs'
-import { NextApiRequest, NextApiResponse } from 'next'
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import utc from 'dayjs/plugin/utc'
 
-export default async function handle(
+import { NextApiRequest, NextApiResponse } from 'next'
+import { prisma } from '../../../../lib/prisma'
+
+dayjs.extend(utc)
+
+export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse,
 ) {
@@ -17,7 +19,9 @@ export default async function handle(
   const { date, timezoneOffset } = req.query
 
   if (!date || !timezoneOffset) {
-    return res.status(400).json({ message: 'Date or timezone not found' })
+    return res
+      .status(400)
+      .json({ message: 'Date or timezoneOffset not provided.' })
   }
 
   const user = await prisma.user.findUnique({
@@ -27,11 +31,11 @@ export default async function handle(
   })
 
   if (!user) {
-    return res.status(400).json({ message: 'User does not exist' })
+    return res.status(400).json({ message: 'User does not exist.' })
   }
 
   const referenceDate = dayjs(String(date))
-  const isPathDate = referenceDate.endOf('day').isBefore(new Date())
+  const isPastDate = referenceDate.endOf('day').isBefore(new Date())
 
   const timezoneOffsetInHours =
     typeof timezoneOffset === 'string'
@@ -41,7 +45,7 @@ export default async function handle(
   const referenceDateTimeZoneOffsetInHours =
     referenceDate.toDate().getTimezoneOffset() / 60
 
-  if (isPathDate) {
+  if (isPastDate) {
     return res.json({ possibleTimes: [], availableTimes: [] })
   }
 
@@ -58,24 +62,24 @@ export default async function handle(
 
   const { time_start_in_minutes, time_end_in_minutes } = userAvailability
 
-  // eslint-disable-next-line camelcase
-  const starHour = time_start_in_minutes / 60
+  const startHour = time_start_in_minutes / 60
   const endHour = time_end_in_minutes / 60
 
-  const possibleTimes = Array.from({ length: endHour - starHour }).map(
+  const possibleTimes = Array.from({ length: endHour - startHour }).map(
     (_, i) => {
-      return starHour + i
+      return startHour + i
     },
   )
 
-  // greater than or equal
-
   const blockedTimes = await prisma.scheduling.findMany({
+    select: {
+      date: true,
+    },
     where: {
       user_id: user.id,
       date: {
         gte: referenceDate
-          .set('hour', starHour)
+          .set('hour', startHour)
           .add(timezoneOffsetInHours, 'hours')
           .toDate(),
         lte: referenceDate
@@ -87,22 +91,18 @@ export default async function handle(
   })
 
   const availableTimes = possibleTimes.filter((time) => {
-    const isTimeBlock = blockedTimes.some(
+    const isTimeBlocked = blockedTimes.some(
       (blockedTime) =>
-        // blockedTime.date.getHours() === time,
         blockedTime.date.getUTCHours() - timezoneOffsetInHours === time,
     )
-    // referenceDate.set('hour', time).isBefore(new Date())
+
     const isTimeInPast = referenceDate
       .set('hour', time)
       .subtract(referenceDateTimeZoneOffsetInHours, 'hours')
       .isBefore(dayjs().utc().subtract(timezoneOffsetInHours, 'hours'))
 
-    return !isTimeBlock && !isTimeInPast
+    return !isTimeBlocked && !isTimeInPast
   })
 
-  return res.json({
-    possibleTimes,
-    availableTimes,
-  })
+  return res.json({ possibleTimes, availableTimes })
 }

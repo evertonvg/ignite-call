@@ -6,7 +6,7 @@ export const CalendarContainer = styled('div', {
   gap: '$6',
   padding: '$6',
 })
-export const Calendarheader = styled('div', {
+export const CalendarHeader = styled('div', {
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'space-between',
