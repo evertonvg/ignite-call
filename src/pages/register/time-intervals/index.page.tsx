@@ -67,6 +67,7 @@ const timeIntervalsFormSchema = z.object({
 type TimeIntervalsFormInput = z.input<typeof timeIntervalsFormSchema>
 type TimeIntervalsFormOutput = z.output<typeof timeIntervalsFormSchema>
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any
 export default function TimeIntervals(props) {
   const {
     register,
@@ -100,6 +101,7 @@ export default function TimeIntervals(props) {
 
   const intervals = watch('intervals')
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   async function handleSetTimeIntervals(data: any) {
     const { intervals } = data as TimeIntervalsFormOutput
 

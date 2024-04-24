@@ -6,20 +6,20 @@ import {
   Text,
   TextArea,
 } from '@ignite-ui/react'
-import { ArrowRight } from 'phosphor-react'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
 import Head from 'next/head'
 import { Container, Header } from '../styles'
 import { FormAnnotation, ProfileBox } from './styles'
-import { GetServerSideProps, InferGetServerSidePropsType } from 'next'
+import { GetServerSideProps } from 'next'
 import { useSession } from 'next-auth/react'
 import { buildNextAuthOptions } from '../../api/auth/[...nextauth].api'
 import { getServerSession } from 'next-auth'
 import { api } from '@/src/lib/axios'
 import { useRouter } from 'next/router'
 import { NextSeo } from 'next-seo'
+import { ArrowRight } from 'phosphor-react'
 
 const updateProfileSchema = z.object({
   bio: z.string(),
@@ -27,9 +27,7 @@ const updateProfileSchema = z.object({
 
 type UpdateProfileData = z.infer<typeof updateProfileSchema>
 
-export default function UpdateProfile(
-  props: InferGetServerSidePropsType<typeof getServerSideProps>,
-) {
+export default function UpdateProfile() {
   const {
     register,
     handleSubmit,
@@ -72,7 +70,7 @@ export default function UpdateProfile(
             <Text size="sm">Foto de perfil</Text>
             <Avatar
               src={session.data?.user?.avatar_url}
-              alt={session.data?.user?.name}
+              // alt={session.data?.user?.name}
               referrerPolicy="no-referrer"
             />
           </label>
@@ -81,7 +79,7 @@ export default function UpdateProfile(
             <TextArea placeholder="seu nome" {...register('bio')} />
             <FormAnnotation size="sm">Fale um pouco sobre você.</FormAnnotation>
           </label>
-          <Button type="submit">
+          <Button type="submit" disabled={isSubmitting}>
             Finalizar
             <ArrowRight />
           </Button>
