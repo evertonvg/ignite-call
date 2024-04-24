@@ -68,7 +68,7 @@ type TimeIntervalsFormInput = z.input<typeof timeIntervalsFormSchema>
 type TimeIntervalsFormOutput = z.output<typeof timeIntervalsFormSchema>
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any
-export default function TimeIntervals(props) {
+export default function TimeIntervals() {
   const {
     register,
     handleSubmit,

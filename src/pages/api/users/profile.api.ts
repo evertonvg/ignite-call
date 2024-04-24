@@ -31,6 +31,7 @@ export default async function handler(
   try {
     await prisma.user.update({
       where: {
+        // @ts-expect-error: Unreachable code error
         id: session.user?.id,
       },
       data: {
