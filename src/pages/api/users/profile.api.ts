@@ -27,19 +27,14 @@ export default async function handler(
   }
 
   const { bio } = updateProfileBodySchema.parse(req.body)
+  await prisma.user.update({
+    where: {
+      id: session.user?.id,
+    },
+    data: {
+      bio,
+    },
+  })
+  return res.status(204).end()
 
-  try {
-    await prisma.user.update({
-      where: {
-        // @ts-expect-error: Unreachable code error
-        id: session.user?.id,
-      },
-      data: {
-        bio,
-      },
-    })
-    return res.status(201).end()
-  } catch (err) {
-    return res.status(500).end()
-  }
 }
