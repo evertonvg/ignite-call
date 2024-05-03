@@ -1,4 +1,4 @@
-import { Button, Text, TextInput } from '@ignite-ui/react'
+import { Button, Text } from '@ignite-ui/react'
 import { Form, FormAnnotation } from './styles'
 import { ArrowRight } from 'phosphor-react'
 import { useForm } from 'react-hook-form'
@@ -35,13 +35,14 @@ export function ClaimUsernameForm() {
   return (
     <>
       <Form as="form" onSubmit={handleSubmit(handleClaimUsername)}>
-      <TextInput // eslint-disable-line
+      {/* <TextInput
           size="sm"
           crossOrigin=""
           prefix="ignite.com/"
           placeholder="seu-usuário"
           {...register('username')}
-        />
+        /> */}
+        <input type="text" {...register('username')} />
         <Button size="sm" type="submit" disabled={isSubmitting}>
           Reservar
           <ArrowRight />

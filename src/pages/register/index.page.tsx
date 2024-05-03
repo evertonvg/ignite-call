@@ -1,5 +1,5 @@
 import { zodResolver } from '@hookform/resolvers/zod'
-import { Button, Heading, MultiStep, Text, TextInput } from '@ignite-ui/react'
+import { Button, Heading, MultiStep, Text } from '@ignite-ui/react'
 import { AxiosError } from 'axios'
 import { NextSeo } from 'next-seo'
 import { useRouter } from 'next/router'
@@ -80,11 +80,12 @@ export default function Register() {
         <Form as="form" onSubmit={handleSubmit(handleRegister)}>
           <label>
             <Text size="sm">Nome de usuário</Text>
-            <TextInput
+            {/* <TextInput 
               prefix="ignite.com/"
               placeholder="seu-usuário"
               {...register('username')}
-            />
+            /> */}
+            <input type="text" {...register('username')} />
 
             {errors.username && (
               <FormError size="sm">{errors.username.message}</FormError>
@@ -93,7 +94,8 @@ export default function Register() {
 
           <label>
             <Text size="sm">Nome completo</Text>
-            <TextInput placeholder="Seu nome" {...register('name')} />
+            {/* <TextInput placeholder="Seu nome" {...register('name')} /> */}
+            <input type="text" {...register('name')} />
 
             {errors.name && (
               <FormError size="sm">{errors.name.message}</FormError>

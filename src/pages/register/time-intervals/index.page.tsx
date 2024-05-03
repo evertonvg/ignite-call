@@ -5,7 +5,6 @@ import {
   Heading,
   MultiStep,
   Text,
-  TextInput,
 } from '@ignite-ui/react'
 import { NextSeo } from 'next-seo'
 import { useRouter } from 'next/router'
@@ -67,7 +66,7 @@ const timeIntervalsFormSchema = z.object({
 type TimeIntervalsFormInput = z.input<typeof timeIntervalsFormSchema>
 type TimeIntervalsFormOutput = z.output<typeof timeIntervalsFormSchema>
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any
+
 export default function TimeIntervals() {
   const {
     register,
@@ -150,20 +149,19 @@ export default function TimeIntervals() {
                     <Text>{weekDays[field.weekDay]}</Text>
                   </IntervalDay>
                   <IntervalInputs>
-                    <TextInput
+                    {/* <TextInput
                       size="sm"
                       type="time"
                       step={60}
                       disabled={intervals[index].enabled === false}
                       {...register(`intervals.${index}.startTime`)}
-                    />
-                    <TextInput
-                      size="sm"
-                      type="time"
-                      step={60}
+                    /> */}
+                    <input 
+                      type="text" 
                       disabled={intervals[index].enabled === false}
-                      {...register(`intervals.${index}.endTime`)}
-                    />
+                      {...register(`intervals.${index}.startTime`)} />
+                    <input type="text" disabled={intervals[index].enabled === false}
+                    {...register(`intervals.${index}.endTime`)} />
                   </IntervalInputs>
                 </IntervalItem>
               )
